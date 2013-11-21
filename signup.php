@@ -63,22 +63,6 @@ text-align: center;
 border-radius: 10px;
 }
 
-a.clickable {
-cursor: pointer;
-}
-
-.modal-dialog {
-margin-top: 10%;
-
-}
-
-.modal-form-control {
-width: 40%;
-}
-
-.modal-title {
-font-size: 30px;
-}
 
 </style>
 
@@ -105,7 +89,7 @@ font-size: 30px;
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-      <li><a href="about.php">About Us</a></li>
+      <li><a href="#">About Us</a></li>
     </ul>
     <form class="navbar-form navbar-left" role="search">
       <div class="form-group">
@@ -113,9 +97,6 @@ font-size: 30px;
       </div>
       <button type="submit" class="btn btn-warning">Search</button>
     </form>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a class="clickable" data-toggle="modal" data-target="#loginmodal">Login/Register</a></li>
-    </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
 
@@ -135,31 +116,6 @@ font-size: 30px;
 
 
 
-
-
-
-
-
-<div class="modal fade" id="loginmodal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Login</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-			Username <input type="text" class="form-control modal-form-control" placeholder="Username"><br>
-			Password  <input type="password"class="form-control modal-form-control" placeholder="Password"><br>
-			<button type="button" class="btn btn-default"><a href="signgup.php">Register</a></button>
-			<button type="button" class="btn btn-primary">Login</button>
-		</form><br>
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
