@@ -84,7 +84,14 @@ font-size: 30px;
 
 </head>
 <body>
+<script>
+$(document).ready(function() {
+	$('#registerbutton').click(function() {
+		$('#loginmodal').modal('hide');
+	});
+});
 
+</script>
 
  
 <?PHP
@@ -105,7 +112,17 @@ font-size: 30px;
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
+	<li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recipes<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Appetizer</a></li>
+          <li><a href="#">Main</a></li>
+          <li><a href="#">Dessert</a></li>
+        </ul>
+      </li>
       <li><a href="about.php">About Us</a></li>
+	  <li><a href="#">Favorite Recipes</a></li>
+	  <li><a href="#">Add Recipe</a></li>
     </ul>
     <form class="navbar-form navbar-left" role="search">
       <div class="form-group">
@@ -151,8 +168,30 @@ font-size: 30px;
         <form>
 			Username <input type="text" class="form-control modal-form-control" placeholder="Username"><br>
 			Password  <input type="password"class="form-control modal-form-control" placeholder="Password"><br>
-			<button type="button" class="btn btn-default"><a href="signgup.php">Register</a></button>
-			<button type="button" class="btn btn-primary">Login</button>
+			<a id="registerbutton" class="btn btn-default" data-toggle="modal" data-target="#registermodal">Register</a>
+			<button type="Submit" class="btn btn-primary">Login</button>
+		</form><br>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal" id="registermodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Sign Up</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+			Username <input type="text" class="form-control modal-form-control" placeholder="Username"><br>
+			Password  <input type="password"class="form-control modal-form-control" placeholder="Password"><br>
+			Retype Password  <input type="password"class="form-control modal-form-control" placeholder="Password"><br>
+			<button type="Submit" class="btn btn-primary">Submit</button>
 		</form><br>
       </div>
       <div class="modal-footer">
