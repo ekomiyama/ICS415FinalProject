@@ -64,6 +64,7 @@ margin-left: 20%;
 margin-right: 25%;
 margin-bottom: 25%;
 padding-bottom: 25px;
+padding-top: 25px;
 width: 70%
 }
 
@@ -82,6 +83,16 @@ width: 40%;
 
 .modal-title {
 font-size: 30px;
+}
+
+.recipearea {
+height: 300px;
+width: 75%;
+}
+
+.recipe-input {
+width: 50%;
+margin-left: 25%
 }
 
 </style>
@@ -146,7 +157,7 @@ $(document).ready(function() {
       </li>
       <li><a href="about.php">About Us</a></li>
 	  <li><a href="#">Favorite Recipes</a></li>
-	  <li><a href="addrecipe.php">Add Recipe</a></li>
+	  <li><a href="#">Add Recipe</a></li>
     <form class="navbar-form navbar-left" role="search">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Search for keywords">
@@ -162,18 +173,21 @@ $(document).ready(function() {
 
 <div class="container row maincontainer">
   <div class="container col-md-8 backcolor maincolumn">
-	<h1>Welcome!</h1>
-	<br><br>
-	<p>This is a website dedicated to the procrastinating cook who waits until the last minute to figure out what to make for a meal. Whether you're on the go or at home, QuickFood is a great place to quickly find all of your recipes.</p>
-	<br><br>
-	<p>Create an account and save your favorite recipes for later or even submit your own! QuickFood encourages users to help grow our collection of great recipes that others will be dying to try!</p>
-	<br><br>
+	<form>
+	Recipe Name<br><input type="text" class="form-control recipe-input"><br><br>
+	Tags<br><input type="text" class="form-control recipe-input">
+	<div><span class='help-inline'>Tags are keywords that help users find what they want.</span></div><br><br>
+	Description:<br>
+	<textarea class="recipearea"></textarea><br><br>
+	Recipe:<br>
+	<textarea class="recipearea"></textarea><br><br>
+	<button type="submit" class="btn btn-warning">Submit</button>
+	</form>
   
   </div>
 
 
 </div>
-
 
 
 

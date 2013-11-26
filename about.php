@@ -52,15 +52,16 @@ background-color: white;
 
 .maincontainer {
 padding-top: 100px;
-margin-left: 25%;
-margin-right: 25%;
-margin-bottom: 25%;
 }
 
 .maincolumn {
 height: 500px;
 text-align: center;
 border-radius: 10px;
+margin-left: 20%;
+margin-right: 25%;
+margin-bottom: 25%;
+width: 70%
 }
 
 
@@ -104,6 +105,7 @@ border-radius: 10px;
   <div class="container col-md-8 backcolor maincolumn">
 	<h1>About Us</h1>
 	<br><br>
+	<p>This website was built with responsive web design in mind, utilizing Twitter Bootstrap 3.0 and implementing a web page design that would look good in any visual format.</p>
   
   </div>
 
