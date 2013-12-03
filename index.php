@@ -63,6 +63,7 @@ border-radius: 10px;
 margin-left: 20%;
 margin-right: 25%;
 margin-bottom: 25%;
+padding-top: 25px;
 padding-bottom: 25px;
 width: 70%
 }
@@ -84,10 +85,20 @@ width: 40%;
 font-size: 30px;
 }
 
+.welcome {
+margin-top: 10px;
+}
 </style>
 
 </head>
 <body>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-cookie-master/jquery.cookie.js"></script>
+	<script src="js/jquery-validation-1.11.1/dist/jquery.validate.min.js"></script>
+	
 <?PHP
 $mysqli = mysqli_connect("localhost","ics415", "","ics415");
 
@@ -98,7 +109,7 @@ if(! mysqli_query($mysqli, "CREATE TABLE IF NOT EXISTS Users_qf(ID int NOT NULL 
 //Do Nothing
 }
 
-if(! mysqli_query($mysqli, "CREATE TABLE IF NOT EXISTS Recipes(ID int NOT NULL AUTO_INCREMENT, Name varchar(255), Tags varchar(255), Description varchar(255), Procedures varchar(255), PRIMARY KEY (ID));")) {
+if(! mysqli_query($mysqli, "CREATE TABLE IF NOT EXISTS Recipes(ID int NOT NULL AUTO_INCREMENT, Name varchar(255), PictureName varchar(255), Category varchar(255), Tags varchar(255), Description varchar(255), Procedures varchar(5000), Author varchar(255), PRIMARY KEY (ID));")) {
  echo "ERROR: create table 'Recipes' failed";
 } else {
 //Do Nothing
@@ -108,19 +119,15 @@ if(! mysqli_query($mysqli, "CREATE TABLE IF NOT EXISTS Recipes(ID int NOT NULL A
 ?>
 <script>
 $(document).ready(function() {
-	$('#registerbutton').click(function() {
-		$('#loginmodal').modal('hide');
+	$('#logout').click(function() {
+		$.removeCookie('CurrentUser');
 	});
-	
-	
 });
-
 </script>
-
- 
 <?PHP
-
-
+if(isset($_POST['logoutbutton'])) {
+setcookie('CurrentUser', '', time()-3600);
+}
 ?>
 <nav class="nav navbar-fixed-top nav-pills navcolor" role="navigation">
 <div class="navbar-header">
@@ -139,23 +146,36 @@ $(document).ready(function() {
 	<li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Recipes<b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Appetizer</a></li>
-          <li><a href="#">Main</a></li>
-          <li><a href="#">Dessert</a></li>
+          <li><a href="recipes.php?Appetizer">Appetizer</a></li>
+          <li><a href="recipes.php?Main">Main</a></li>
+          <li><a href="recipes.php?Dessert">Dessert</a></li>
         </ul>
       </li>
       <li><a href="about.php">About Us</a></li>
-	  <li><a href="#">Favorite Recipes</a></li>
-	  <li><a href="addrecipe.php">Add Recipe</a></li>
-    <form class="navbar-form navbar-left" role="search">
+	  <?PHP
+		if(isset($_COOKIE['CurrentUser'])) {
+			echo "<li><a href='#'>Favorite Recipes</a></li>";
+			echo "<li><a href='addrecipe.php'>Add Recipe</a></li>";
+		}
+	  ?>
+    <form class="navbar-form navbar-left" role="search" action="recipes.php?Search">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search for keywords">
+        <input type="text" class="form-control" name="search" placeholder="Search for keywords">
       </div>
-      <button type="submit" class="btn btn-warning">Search</button>
+      <button type="submit" name="searchbutton" class="btn btn-warning">Search</button>
     </form>
 	</ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a class="clickable" data-toggle="modal" data-target="#loginmodal">Login/Register</a></li>
+		<?PHP 
+			if(isset($_COOKIE['CurrentUser'])) {
+				echo "<li><p class='welcome'>Welcome, ".$_COOKIE['CurrentUser']."!</p></li>";
+				echo "<li><a class='clickable' href='index.php'><div id='logout'>Logout</div></a></li>";
+			}else {
+				echo "<li><a class='clickable' href='login.php'>Login</a></li>";
+				echo "<li><a class='clickable' href='signup.php'>Register</a></li>";
+			}
+			
+		?>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
@@ -174,59 +194,5 @@ $(document).ready(function() {
 
 </div>
 
-
-
-
-
-
-
-
-<div class="modal fade" id="loginmodal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Login</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-			Username <input type="text" class="form-control modal-form-control" placeholder="Username"><br>
-			Password  <input type="password"class="form-control modal-form-control" placeholder="Password"><br>
-			<a id="registerbutton" class="btn btn-default" data-toggle="modal" data-target="#registermodal">Register</a>
-			<button type="Submit" class="btn btn-primary">Login</button>
-		</form><br>
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<div class="modal" id="registermodal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Sign Up</h4>
-      </div>
-      <div class="modal-body">
-        <form>
-			Username <input type="text" class="form-control modal-form-control" placeholder="Username"><br>
-			Password  <input type="password"class="form-control modal-form-control" placeholder="Password"><br>
-			Retype Password  <input type="password"class="form-control modal-form-control" placeholder="Password"><br>
-			<button type="Submit" class="btn btn-primary">Submit</button>
-		</form><br>
-      </div>
-      <div class="modal-footer">
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

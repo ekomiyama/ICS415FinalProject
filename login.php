@@ -77,17 +77,30 @@ margin-top: 10%;
 
 }
 
-.modal-form-control {
-width: 40%;
-}
-
 .modal-title {
 font-size: 30px;
 }
 
-.welcome {
-margin-top: 10px;
+.table-left {
+text-align: left;
+border-right: solid;
+border-width: 1px;
+border-color: gray;
+width: 50%;
 }
+
+.login-form-control {
+width: 70%;
+}
+
+.error {
+color: red;
+}
+
+.username-error {
+color: red;
+}
+
 </style>
 
 </head>
@@ -98,8 +111,9 @@ margin-top: 10px;
     <script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery-cookie-master/jquery.cookie.js"></script>
 	<script src="js/jquery-validation-1.11.1/dist/jquery.validate.min.js"></script>
-	
+
 <?PHP
+session_start();
 $mysqli = mysqli_connect("localhost","ics415", "","ics415");
 
 
@@ -109,26 +123,36 @@ if(! mysqli_query($mysqli, "CREATE TABLE IF NOT EXISTS Users_qf(ID int NOT NULL 
 //Do Nothing
 }
 
-if(! mysqli_query($mysqli, "CREATE TABLE IF NOT EXISTS Recipes(ID int NOT NULL AUTO_INCREMENT, Name varchar(255), PictureName varchar(255), Tags varchar(255), Description varchar(255), Procedures varchar(5000), Author varchar(255), PRIMARY KEY (ID));")) {
+if(! mysqli_query($mysqli, "CREATE TABLE IF NOT EXISTS Recipes(ID int NOT NULL AUTO_INCREMENT, Name varchar(255), PictureName varchar(255), Category varchar(255), Tags varchar(255), Description varchar(255), Procedures varchar(5000), Author varchar(255), PRIMARY KEY (ID));")) {
  echo "ERROR: create table 'Recipes' failed";
 } else {
 //Do Nothing
 }
 
-
+$_SESSION['register'] = false;
+$_SESSION['login'] = true;
 ?>
 <script>
 $(document).ready(function() {
-	$('#logout').click(function() {
-		$.removeCookie('CurrentUser');
-	});
+$('#loginform').validate({
+  rules: {
+	username: "required",
+	password: "required"
+	},
+  messges: {
+	username: {
+		required: "Username is required"
+	},
+	
+	password: {
+		required: "Password is required"
+	}
+  
+  }
+
+  });
 });
 </script>
-<?PHP
-if(isset($_POST['logoutbutton'])) {
-setcookie('CurrentUser', '', time()-3600);
-}
-?>
 <nav class="nav navbar-fixed-top nav-pills navcolor" role="navigation">
 <div class="navbar-header">
     <button type="button" class="navbar-toggle btnbackcolor" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -182,12 +206,28 @@ setcookie('CurrentUser', '', time()-3600);
 
 <div class="container row maincontainer">
   <div class="container col-md-8 backcolor maincolumn">
-	<h1>About Us</h1>
+	<h1>Login</h1>
 	<br><br>
-	<p>This website was built with responsive web design in mind, utilizing Twitter Bootstrap 3.0 and implementing a web page design that would look good in any visual format.</p>
-	<p>To create a smoother transition when setting and removing cookies this website uses <a href="https://github.com/carhartl/jquery-cookie">Klaus Hartl's jquery cookie plugin</a> which lets the website handle cookies through jquery making it possible to trigger php regarding cookies on the first page reload.</p>
-	<p>When it comes to logins, registration/sign up, and adding recipes on this site, there must be some type of form validation. On this website this is handled by a <a href="http://jqueryvalidation.org/">jquery validation plugin</a>. 
-	   We also use <a href="http://www.tinymce.com/">TinyMCE</a> which gives users a rich text editor so that their recipe instructions will look the way they were meant to.</p>
+	<table class="table">
+		<tr>
+		<td class="table-left">
+        <form method="post" id="loginform" action="redirect.php">
+			<?PHP
+				if(isset($_SESSION['badlogin']) && $_SESSION['badlogin'] == true) {
+				echo "<p class='username-error'>Invalid Login: Incorrect Username or Password</p>";
+				}
+				$_SESSION['badlogin'] = false;
+			?>
+			Username <input type="text" name="username" class="form-control login-form-control" placeholder="Username"><br>
+			Password  <input type="password" name="password" class="form-control login-form-control" placeholder="Password"><br>
+			<input type="submit" name="registerbutton" id="register" class="btn btn-primary" value="Login"/>
+		</form><br>
+		</td>
+		<td>
+		<p>Take time to register with our website and share your recipes with the community!</p>
+		<p>On top of being able to add recipes to the site, you will also be able to save your favorite recipes so you can access them quickly!</p>
+		</td>
+		</tr>
   
   </div>
 
